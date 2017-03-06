@@ -1,0 +1,79 @@
+<!--
+  Generated template for the Users page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Minor Translator</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>From</ion-label>
+          <ion-select [(ngModel)]="fromLanguage">
+            <ion-option value="en">English</ion-option>
+            <ion-option value="de">Deutsch</ion-option>
+            <ion-option value="es">Español</ion-option>
+            <ion-option value="fr">Français</ion-option>
+            <ion-option value="ru">Русский</ion-option>
+            <ion-option value="uk">Українська</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>To</ion-label>
+          <ion-select [(ngModel)]="toLanguage">
+            <ion-option value="en">English</ion-option>
+            <ion-option value="de">Deutsch</ion-option>
+            <ion-option value="es">Español</ion-option>
+            <ion-option value="fr">Français</ion-option>
+            <ion-option value="ru">Русский</ion-option>
+            <ion-option value="uk">Українська</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label floating>Enter word or text</ion-label>
+        <ion-textarea #text></ion-textarea>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <button ion-button round (click)="getTranslation(text.value)">Translate</button>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="translatedText.length > 0">
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-content>{{translatedText}}</ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!--<div class="row">
+    <div class="col">
+      <textarea rows="3" cols="25" #text></textarea>
+      <button class="button button-md-secondary button-large-md" (click)="getTranslation(text.value)">Translate</button>
+    </div>
+    <div class="col">
+      <div class="textBox">{{translatedText}}</div>
+    </div>
+  </div>-->
+
+
+
+</ion-content>

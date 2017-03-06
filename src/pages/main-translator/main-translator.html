@@ -1,0 +1,68 @@
+<!--
+  Generated template for the MainTranslator page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>main-translator</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label fixed>Enter word</ion-label>
+          <ion-input type="text" #word></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col><button ion-button round (click)="getWord(word.value)">Translate</button></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!--<div class="row">
+    <div class="col">
+      <textarea rows="3" cols="25" #word></textarea>
+      <button class="button button-md-secondary button-large-md" (click)="getWord(word.value)">Translate</button>
+    </div>
+    <div class="col">-->
+
+      <ion-grid *ngIf="results.length > 0">
+        <ion-row>
+          <ion-col class="table-col"><strong>Headword</strong></ion-col>
+          <ion-col class="table-col"><strong>Part of speech</strong></ion-col>
+          <ion-col class="table-col"><strong>Definition</strong></ion-col>
+          <ion-col class="table-col"><strong>Example</strong></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let word of results">
+          <ion-col class="table-col">{{word.headword}}</ion-col>
+          <ion-col class="table-col">{{word.part_of_speech}}</ion-col>
+          <ion-col class="table-col">{{word.senses[0]?.definition}}</ion-col>
+          <ion-col class="table-col" *ngIf="word.senses[0]?.examples">{{word.senses[0]?.examples[0].text}}</ion-col>
+          <ion-col class="table-col" *ngIf="!word.senses[0]?.examples"></ion-col>
+        </ion-row>
+      </ion-grid>
+
+     <!-- <table>
+        <tr>
+          <th>Headword</th>
+          <th>Part of speech</th>
+          <th>Definition</th>
+          <th>Example</th>
+        </tr>
+        <tr *ngFor="let word of results">
+          <td>{{word.headword}}</td>
+          <td>{{word.part_of_speech}}</td>
+          <td>{{word.senses[0]?.definition}}</td>
+          <td *ngIf="word.senses[0]?.examples">{{word.senses[0]?.examples[0].text}}</td>
+        </tr>
+      </table>-->
+    <!--</div>
+  </div>-->
+</ion-content>
