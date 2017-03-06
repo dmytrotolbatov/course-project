@@ -22,7 +22,15 @@
           <ion-input type="text" #word></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col><button ion-button round (click)="addWord(word.value)">Translate</button></ion-col>
+      <ion-col><button ion-button round (click)="addWord(word.value)">Add</button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="table-col"><h3><strong>English</strong></h3></ion-col>
+      <ion-col class="table-col"><h3><strong>Українська</strong></h3></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let word of thesaurus">
+      <ion-col class="table-col">{{word.name}}</ion-col>
+      <ion-col class="table-col">{{word.translation}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
-import {Http, Response} from "@angular/http";
+import {Http} from "@angular/http";
+import {Word} from "../../shared/word";
 
-/*
-  Generated class for the Users page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-users',
   templateUrl: 'minor-translator.html'
@@ -21,6 +16,8 @@ export class MinorTranslatorPage {
   private translatedText:string = '';
   private fromLanguage: string;
   private toLanguage: string;
+  private wordObj: Word = new Word();
+  private urlThesaurus: string = `http://58bd0d0ea0cc651200a4be7d.mockapi.io/v1/words`;
 
   public getTranslation(text) {
     if (!this.fromLanguage || !this.toLanguage) {
@@ -41,6 +38,14 @@ export class MinorTranslatorPage {
         this.translatedText = data.json().text[0];
       });
     }
+  }
+
+  public addWord(word, translation) {
+    this.wordObj.name = word;
+    this.wordObj.translation = translation;
+    this.http.post(this.urlThesaurus, this.wordObj).subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
   ionViewDidLoad() {

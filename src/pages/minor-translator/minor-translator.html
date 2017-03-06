@@ -58,7 +58,7 @@
     <ion-row>
       <ion-col>
         <ion-card>
-          <ion-card-content>{{translatedText}}</ion-card-content>
+          <ion-card-content>{{translatedText}} <button *ngIf="fromLanguage == 'en' && toLanguage == 'uk'" ion-button round (click)="addWord(text.value ,translatedText)">Add to thesaurus</button></ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
