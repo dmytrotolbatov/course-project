@@ -1,32 +1,40 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Http} from "@angular/http";
-
 import {Word} from "../../shared/word";
-import {TestComponent} from "./test.component";
 
 /*
-  Generated class for the Thesaurus page.
+ Generated class for the Thesaurus page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+ See http://ionicframework.com/docs/v2/components/#navigation for more info on
+ Ionic pages and navigation.
+ */
 @Component({
-  selector: 'page-thesaurus',
-  templateUrl: 'thesaurus.html'
+  selector: 'test-component',
+  templateUrl: 'test-component.html'
 })
-export class ThesaurusPage {
+export class TestComponent {
 
   private url: string = `http://58bd0d0ea0cc651200a4be7d.mockapi.io/v1/words`;
   private urlTranslator: string = `https://translate.yandex.net/api/v1.5/tr.json/translate`;
   private key: string = `trnsl.1.1.20170301T135420Z.0c166eb114638a8b.3b7106d8b165070ed387661c32f9c92bff74da15`;
   private wordObj: Word = new Word();
   private thesaurus: any = [];
+  private randomWords: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController) {
+    this.thesaurus = this.navParams.get('thesaurus');
+    console.log(this.thesaurus, 'passed thesaurus');
+    while (this.randomWords.length < 5) {
+      if(!this.randomWords.includes(this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)])){
+        console.log('here!');
+        this.randomWords.push(this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)])
+      }
+    }
+    console.log(this.randomWords, 'randomWords');
   }
 
-  ionViewDidEnter() {
+  /*ionViewDidEnter() {
     this.loadData();
   }
 
@@ -44,10 +52,6 @@ export class ThesaurusPage {
       });
       console.log(this.thesaurus);
     });
-  }
-
-  public viewTest(){
-    this.navCtrl.push(TestComponent, {thesaurus: this.thesaurus})
   }
 
   public addWord(word) {
@@ -71,5 +75,5 @@ export class ThesaurusPage {
       });
     }
 
-  }
+  }*/
 }

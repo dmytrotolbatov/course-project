@@ -8,6 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import {MinorTranslatorPage} from "../pages/minor-translator/minor-translator";
 import {MainTranslatorPage} from "../pages/main-translator/main-translator";
 import {ThesaurusPage} from "../pages/thesaurus/thesaurus";
+import {TestComponent} from "../pages/thesaurus/test.component";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {ThesaurusPage} from "../pages/thesaurus/thesaurus";
     TabsPage,
     MinorTranslatorPage,
     MainTranslatorPage,
-    ThesaurusPage
+    ThesaurusPage,
+    TestComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -32,7 +34,8 @@ import {ThesaurusPage} from "../pages/thesaurus/thesaurus";
     TabsPage,
     MinorTranslatorPage,
     MainTranslatorPage,
-    ThesaurusPage
+    ThesaurusPage,
+    TestComponent
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
