@@ -51,6 +51,7 @@ export class ThesaurusPage {
   }
 
   public addWord(word) {
+    word = word.toLowerCase();
     if (!word) {
       let alert = this.alertCtrl.create({
         title: 'White some text!',
@@ -60,7 +61,6 @@ export class ThesaurusPage {
     }else {
       let urlYandex: string = `${this.urlTranslator}?key=${this.key}&text=${word}&lang=en-uk`;
       return this.http.get(urlYandex).subscribe((data: any) => {
-        // this.translatedText = data.json().text[0];
         this.wordObj.name = word;
         this.wordObj.translation = data.json().text[0];
         console.log(this.wordObj);
@@ -70,6 +70,12 @@ export class ThesaurusPage {
         });
       });
     }
+  }
 
+  public deleteUser(id: number) {
+    return this.http.delete(`${this.url}/${id}`).subscribe((data: any) => {
+      console.log(data);
+      this.loadData();
+    });
   }
 }

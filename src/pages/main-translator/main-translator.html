@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>main-translator</ion-title>
+    <ion-title>Vocabulary</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,20 +18,16 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label fixed>Enter word</ion-label>
+          <ion-label floating>Enter word</ion-label>
           <ion-input type="text" #word></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col><button ion-button round (click)="getWord(word.value)">Translate</button></ion-col>
+      <!--<ion-col><button ion-button class="round-button" (click)="getWord(word.value)"><ion-icon name="arrow-forward"></ion-icon></button></ion-col>-->
+    </ion-row>
+    <ion-row>
+      <button ion-button round (click)="getWord(word.value)">Find</button>
     </ion-row>
   </ion-grid>
-
-  <!--<div class="row">
-    <div class="col">
-      <textarea rows="3" cols="25" #word></textarea>
-      <button class="button button-md-secondary button-large-md" (click)="getWord(word.value)">Translate</button>
-    </div>
-    <div class="col">-->
 
       <ion-grid *ngIf="results.length > 0">
         <ion-row>

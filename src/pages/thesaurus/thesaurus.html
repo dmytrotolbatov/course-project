@@ -12,26 +12,27 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <ion-grid>
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label fixed>Enter word</ion-label>
+          <ion-label floating>Enter word</ion-label>
           <ion-input type="text" #word></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col><button ion-button round (click)="addWord(word.value)">Add</button></ion-col>
+      <ion-col><button ion-button (click)="addWord(word.value)">Add</button></ion-col>
+      <ion-col><button ion-button (click)="viewTest()">Test</button></ion-col>
     </ion-row>
     <ion-row>
-      <ion-col class="table-col"><h3><strong>English</strong></h3></ion-col>
-      <ion-col class="table-col"><h3><strong>Українська</strong></h3></ion-col>
+      <ion-col class="table-col"><h5><strong>English</strong></h5></ion-col>
+      <ion-col class="table-col"><h5><strong>Українська</strong></h5></ion-col>
+      <ion-col></ion-col>
     </ion-row>
     <ion-row *ngFor="let word of thesaurus">
       <ion-col class="table-col">{{word.name}}</ion-col>
       <ion-col class="table-col">{{word.translation}}</ion-col>
+      <ion-col><button ion-button (click)="deleteUser(word.id)" class="round-button"><ion-icon name="trash"></ion-icon></button></ion-col>
     </ion-row>
   </ion-grid>
-  <button (click)="viewTest()">Test</button>
 </ion-content>

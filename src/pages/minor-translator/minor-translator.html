@@ -7,11 +7,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Minor Translator</ion-title>
+    <ion-title>Translator</ion-title>
   </ion-navbar>
 
 </ion-header>
-
 
 <ion-content padding>
   <ion-grid>
@@ -24,8 +23,8 @@
             <ion-option value="de">Deutsch</ion-option>
             <ion-option value="es">Español</ion-option>
             <ion-option value="fr">Français</ion-option>
-            <ion-option value="ru">Русский</ion-option>
             <ion-option value="uk">Українська</ion-option>
+            <ion-option value="ru">Русский</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -37,8 +36,8 @@
             <ion-option value="de">Deutsch</ion-option>
             <ion-option value="es">Español</ion-option>
             <ion-option value="fr">Français</ion-option>
-            <ion-option value="ru">Русский</ion-option>
             <ion-option value="uk">Українська</ion-option>
+            <ion-option value="ru">Русский</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -58,7 +57,7 @@
     <ion-row>
       <ion-col>
         <ion-card>
-          <ion-card-content>{{translatedText}} <button *ngIf="fromLanguage == 'en' && toLanguage == 'uk'" ion-button round (click)="addWord(text.value ,translatedText)">Add to thesaurus</button></ion-card-content>
+          <ion-card-content>{{translatedText}} <ion-icon *ngIf="fromLanguage == 'en' && toLanguage == 'uk'" name="create" (click)="addWord(text.value ,translatedText)"></ion-icon></ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Http} from "@angular/http";
+import * as _ from "lodash"
 import {Word} from "../../shared/word";
 
 /*
@@ -21,59 +22,58 @@ export class TestComponent {
   private wordObj: Word = new Word();
   private thesaurus: any = [];
   private randomWords: any = [];
+  private inputs: any = [];
+  private wrongWords: Array<string> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController) {
     this.thesaurus = this.navParams.get('thesaurus');
     console.log(this.thesaurus, 'passed thesaurus');
     while (this.randomWords.length < 5) {
-      if(!this.randomWords.includes(this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)])){
+      let randomWord = this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)];
+      if(!this.contains(this.randomWords, randomWord)){
+      // if(!_.some(this.randomWords, this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)])){
         console.log('here!');
-        this.randomWords.push(this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)])
+        this.randomWords.push(randomWord);
       }
     }
     console.log(this.randomWords, 'randomWords');
   }
 
-  /*ionViewDidEnter() {
-    this.loadData();
+  public contains(arr, obj) {
+    console.log(arr, obj, 'check if true!');
+    for (var i = 0; i < arr.length; i++){
+      if (arr[i].id === obj.id){
+        return true;
+      }
+    }
+    return false;
   }
 
-  public loadData() {
-    this.http.get(this.url).subscribe((data: any) => {
-      this.thesaurus = data.json();
-      this.thesaurus.sort( (word1, word2) => {
-        if (word1.name < word2.name) {
-          return -1;
-        } else if (word1.name > word2.name) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-      console.log(this.thesaurus);
-    });
-  }
-
-  public addWord(word) {
-    if (!word) {
+  public check() {
+    if (this.inputs.length != this.randomWords.length){
       let alert = this.alertCtrl.create({
-        title: 'White some text!',
+        title: `Write all answers`,
         buttons: ['OK']
       });
       alert.present();
     }else {
-      let urlYandex: string = `${this.urlTranslator}?key=${this.key}&text=${word}&lang=en-uk`;
-      return this.http.get(urlYandex).subscribe((data: any) => {
-        // this.translatedText = data.json().text[0];
-        this.wordObj.name = word;
-        this.wordObj.translation = data.json().text[0];
-        console.log(this.wordObj);
-        this.http.post(this.url, this.wordObj).subscribe((data: any) => {
-          console.log(data);
-          this.loadData();
-        });
+      let mistakes: number = 0;
+      console.log(this.inputs);
+      for (let i = 0; i < this.inputs.length; i++) {
+        if (this.inputs[i].toLowerCase() != this.randomWords[i].name.toLowerCase()) {
+          mistakes++;
+          this.wrongWords.push(this.inputs[i]);
+        }
+      }
+      let alertCorrect = this.alertCtrl.create({
+        title: `Correct!`,
+        buttons: ['OK']
       });
+      let alertFalse = this.alertCtrl.create({
+        title: `Mistakes: ${this.wrongWords.join(', ')}(${mistakes})`,
+        buttons: ['OK']
+      });
+      mistakes > 0 ? alertFalse.present() : alertCorrect.present();
     }
-
-  }*/
+  }
 }

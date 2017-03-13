@@ -15,23 +15,15 @@
 
 <ion-content padding>
   <ion-grid>
-    <!--<ion-row>
+    <h1>Test your knowledge</h1>
+    <ion-row *ngFor="let word of randomWords; let i=index">
       <ion-col>
         <ion-item>
-          <ion-label fixed>Enter word</ion-label>
-          <ion-input type="text" #word></ion-input>
+          <ion-label floating>{{word.translation}}</ion-label>
+          <ion-input type="text" [(ngModel)]="inputs[i]"></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col><button ion-button round (click)="addWord(word.value)">Add</button></ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col class="table-col"><h3><strong>English</strong></h3></ion-col>
-      <ion-col class="table-col"><h3><strong>Українська</strong></h3></ion-col>
-    </ion-row>
-    <ion-row *ngFor="let word of thesaurus">
-      <ion-col class="table-col">{{word.name}}</ion-col>
-      <ion-col class="table-col">{{word.translation}}</ion-col>
-    </ion-row>-->
-    <h1>Test</h1>
+    <button ion-button (click)="check()">Check</button>
   </ion-grid>
 </ion-content>
