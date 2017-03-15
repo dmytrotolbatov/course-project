@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Http} from "@angular/http";
 import * as _ from "lodash"
-import {Word} from "../../shared/word";
+import {Word} from "../../../shared/word";
 
 /*
  Generated class for the Thesaurus page.
@@ -16,9 +16,8 @@ import {Word} from "../../shared/word";
 })
 export class TestComponent {
 
+  private loading: boolean = true;
   private url: string = `http://58bd0d0ea0cc651200a4be7d.mockapi.io/v1/words`;
-  private urlTranslator: string = `https://translate.yandex.net/api/v1.5/tr.json/translate`;
-  private key: string = `trnsl.1.1.20170301T135420Z.0c166eb114638a8b.3b7106d8b165070ed387661c32f9c92bff74da15`;
   private wordObj: Word = new Word();
   private thesaurus: any = [];
   private randomWords: any = [];
@@ -31,12 +30,15 @@ export class TestComponent {
     while (this.randomWords.length < 5) {
       let randomWord = this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)];
       if(!this.contains(this.randomWords, randomWord)){
-      // if(!_.some(this.randomWords, this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)])){
         console.log('here!');
         this.randomWords.push(randomWord);
       }
     }
     console.log(this.randomWords, 'randomWords');
+  }
+
+  ionViewDidEnter() {
+    this.loading = false;
   }
 
   public contains(arr, obj) {

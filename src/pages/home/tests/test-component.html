@@ -14,7 +14,8 @@
 
 
 <ion-content padding>
-  <ion-grid>
+  <ion-spinner name="bubbles" *ngIf="loading"></ion-spinner>
+  <ion-grid *ngIf="!loading">
     <h1>Test your knowledge</h1>
     <ion-row *ngFor="let word of randomWords; let i=index">
       <ion-col>

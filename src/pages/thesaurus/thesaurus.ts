@@ -3,7 +3,7 @@ import {NavController, NavParams, AlertController} from 'ionic-angular';
 import {Http} from "@angular/http";
 
 import {Word} from "../../shared/word";
-import {TestComponent} from "./test.component";
+import {TestComponent} from "../home/tests/test.component";
 
 /*
   Generated class for the Thesaurus page.
@@ -49,9 +49,9 @@ export class ThesaurusPage {
     });
   }
 
-  public viewTest(){
+  /*public viewTest(){
     this.navCtrl.push(TestComponent, {thesaurus: this.thesaurus})
-  }
+  }*/
 
   public addWord(word) {
     if (!word) {
