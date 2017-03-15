@@ -17,6 +17,7 @@ import {TestComponent} from "./test.component";
 })
 export class ThesaurusPage {
 
+  private loading: boolean = true;
   private url: string = `http://58bd0d0ea0cc651200a4be7d.mockapi.io/v1/words`;
   private urlTranslator: string = `https://translate.yandex.net/api/v1.5/tr.json/translate`;
   private key: string = `trnsl.1.1.20170301T135420Z.0c166eb114638a8b.3b7106d8b165070ed387661c32f9c92bff74da15`;
@@ -43,6 +44,8 @@ export class ThesaurusPage {
         }
       });
       console.log(this.thesaurus);
+      this.loading = false;
+      console.log(this.loading);
     });
   }
 
@@ -51,7 +54,6 @@ export class ThesaurusPage {
   }
 
   public addWord(word) {
-    word = word.toLowerCase();
     if (!word) {
       let alert = this.alertCtrl.create({
         title: 'White some text!',
@@ -59,16 +61,24 @@ export class ThesaurusPage {
       });
       alert.present();
     }else {
-      let urlYandex: string = `${this.urlTranslator}?key=${this.key}&text=${word}&lang=en-uk`;
-      return this.http.get(urlYandex).subscribe((data: any) => {
-        this.wordObj.name = word;
-        this.wordObj.translation = data.json().text[0];
-        console.log(this.wordObj);
-        this.http.post(this.url, this.wordObj).subscribe((data: any) => {
-          console.log(data);
-          this.loadData();
+      if (this.contains(this.thesaurus, word.toLowerCase())) {
+        let alertDublicate = this.alertCtrl.create({
+          title: 'You have this word in list!',
+          buttons: ['OK']
         });
-      });
+        alertDublicate.present();
+      }else {
+        let urlYandex: string = `${this.urlTranslator}?key=${this.key}&text=${word}&lang=en-uk`;
+        return this.http.get(urlYandex).subscribe((data: any) => {
+          this.wordObj.name = word.toLowerCase();
+          this.wordObj.translation = data.json().text[0].toLowerCase();
+          console.log(this.wordObj);
+          this.http.post(this.url, this.wordObj).subscribe((data: any) => {
+            console.log(data);
+            this.loadData();
+          });
+        });
+      }
     }
   }
 
@@ -77,5 +87,14 @@ export class ThesaurusPage {
       console.log(data);
       this.loadData();
     });
+  }
+
+  public contains(arr, word) {
+    for (var i = 0; i < arr.length; i++){
+      if (arr[i].name === word){
+        return true;
+      }
+    }
+    return false;
   }
 }

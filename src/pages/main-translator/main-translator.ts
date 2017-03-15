@@ -16,6 +16,7 @@ export class MainTranslatorPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController) {}
 
+  private loading: boolean;
   private url: string = `http://api.pearson.com/v2/dictionaries/entries?headword=`;
   private results: Array<any> = [];
 
@@ -27,10 +28,12 @@ export class MainTranslatorPage {
       });
       alert.present();
     }else {
+      this.loading = true;
       let urlDictionary: string = `${this.url}${word}`;
       return this.http.get(urlDictionary).subscribe((data: any) => {
         this.results = data.json().results;
         console.log(this.results);
+        this.loading = false;
       });
     }
   }

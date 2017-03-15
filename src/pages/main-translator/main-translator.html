@@ -29,7 +29,8 @@
     </ion-row>
   </ion-grid>
 
-      <ion-grid *ngIf="results.length > 0">
+      <ion-spinner name="bubbles" *ngIf="loading"></ion-spinner>
+      <ion-grid *ngIf="results.length > 0 && !loading">
         <ion-row>
           <ion-col class="table-col"><strong>Headword</strong></ion-col>
           <ion-col class="table-col"><strong>Part of speech</strong></ion-col>

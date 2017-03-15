@@ -40,14 +40,6 @@ export class MinorTranslatorPage {
     }
   }
 
-  public addWord(word, translation) {
-    this.wordObj.name = word;
-    this.wordObj.translation = translation;
-    this.http.post(this.urlThesaurus, this.wordObj).subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad UsersPage');
   }

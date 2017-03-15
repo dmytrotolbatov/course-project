@@ -18,11 +18,13 @@
 .table-col {
   border: solid black 1px;
   text-align: center;
+  background: white;
 }
 
 .translation-result {
   border: solid black 1px;
   font-size: large;
+  background: white;
 }
 
 .round-button {
@@ -42,4 +44,66 @@
 }
 .round-button:hover {
   background: #262626;
+}
+
+ion-spinner svg {
+  width: 50px;
+  height: 50px;
+  stroke: #222;
+  fill: white;
+  margin: -25px 0 0 -25px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+
+ion-spinner {
+  left: 50%;
+}
+
+ion-content {
+  position: absolute;
+}
+
+/*ion-content {
+  background: url("https://lh6.ggpht.com/T5JGqVG2m-1peoWlezQbdjCzDD57cpHob9pi1KxUyNnMKNvqFkKOvhFEx_CKUt5M4gY=w300");
+  background-size: cover;
+  display: block;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  height: 800px;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 1;
+}*/
+
+ion-content:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+
+  display: block;
+  background-image: url('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTvuzBRZq_IjovIPCOfVEQn8SjWcssUo-TIelmCDVqEsoteeelg');
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+ion-content {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  margin: auto;
 }

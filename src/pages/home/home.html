@@ -5,11 +5,17 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Complex-translator</h2>
-  <p>
-    This app can help you in learning English.
-  </p>
-  <p>
-    Also, you can find here multi-language translator.
-  </p>
+  <ion-spinner name="bubbles" *ngIf="loading"></ion-spinner>
+  <ion-card *ngIf="!loading">
+    <ion-card-content>
+      <h2>Welcome to Complex-translator</h2>
+      <p>
+        This app can help you in learning English.
+      </p>
+      <p>
+        Also, you can find here multi-language translator.
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-row><ion-col><button ion-button>Test</button></ion-col></ion-row>
 </ion-content>
