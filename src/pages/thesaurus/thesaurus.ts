@@ -72,6 +72,7 @@ export class ThesaurusPage {
         return this.http.get(urlYandex).subscribe((data: any) => {
           this.wordObj.name = word.toLowerCase();
           this.wordObj.translation = data.json().text[0].toLowerCase();
+          this.wordObj.correctAnswers = 0;
           console.log(this.wordObj);
           this.http.post(this.url, this.wordObj).subscribe((data: any) => {
             console.log(data);

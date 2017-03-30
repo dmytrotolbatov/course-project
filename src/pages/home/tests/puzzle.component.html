@@ -25,7 +25,7 @@
       <ion-input #input type="text" [(ngModel)]="inputForPuzzle"></ion-input>
     </ion-item>
     <ion-row>
-      <ion-col><button ion-button (click)="check()">Check</button></ion-col>
+      <ion-col><button ion-button (click)="check(input)">Check</button></ion-col>
       <ion-col><button ion-button (click)="next(input)">Next</button></ion-col>
       <ion-col><h2>{{index+1}}/{{wordsForPuzzle.length}}</h2></ion-col>
     </ion-row>

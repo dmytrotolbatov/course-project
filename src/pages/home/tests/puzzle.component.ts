@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { Http } from '@angular/http';
+import { Word } from '../../../shared/word';
 
 @Component({
   selector: 'puzzle-component',
@@ -7,6 +9,7 @@ import {NavController, NavParams, AlertController} from 'ionic-angular';
 })
 export class PuzzleComponent {
 
+  private url: string = `http://58bd0d0ea0cc651200a4be7d.mockapi.io/v1/words`;
   private index: number = 0;
   private loading: boolean = true;
   private thesaurus: any = [];
@@ -15,14 +18,18 @@ export class PuzzleComponent {
   private inputForPuzzle: string = '';
   private correctAnswers: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private http: Http) {
     this.thesaurus = this.navParams.get('thesaurus');
     this.shuffledThesaurus = this.shuffle(this.thesaurus);
     console.log(this.shuffledThesaurus[0].name, 'shuffled');
     for (var i = 0; i < this.shuffledThesaurus.length; i++){
       let puzzledWord = this.shuffledThesaurus[i].name;
       puzzledWord = this.shuffle(puzzledWord.split(""));
-      this.wordsForPuzzle.push({'puzzle': puzzledWord, 'answer': this.shuffledThesaurus[i].name});
+      this.wordsForPuzzle.push({
+        'puzzle': puzzledWord,
+        'answer': this.shuffledThesaurus[i].name,
+        'id': this.shuffledThesaurus[i].id,
+        'correctAnswers': this.shuffledThesaurus[i].correctAnswers});
     }
     console.log(this.wordsForPuzzle, 'WORDS for puzzle');
   }
@@ -31,7 +38,7 @@ export class PuzzleComponent {
     this.loading = false;
   }
 
-  public check() {
+  public check(input: HTMLInputElement) {
     if (!this.inputForPuzzle) {
       let alert = this.alertCtrl.create({
         title: `Write answer`,
@@ -40,17 +47,33 @@ export class PuzzleComponent {
       alert.present();
     }else if (this.inputForPuzzle == this.wordsForPuzzle[this.index].answer){
       this.correctAnswers++;
+      let wordObj: Word = new Word();
+      wordObj.id = this.wordsForPuzzle[this.index].id;
+      wordObj.correctAnswers = this.wordsForPuzzle[this.index].correctAnswers + 1;
+      this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
+        console.log(data);
+      });
       let alert = this.alertCtrl.create({
         title: `Correct`,
         buttons: ['OK']
       });
       alert.present();
+      this.next(input);
     }else {
+      let wordObj: Word = new Word();
+      wordObj.id = this.wordsForPuzzle[this.index].id;
+      if (wordObj.correctAnswers > 0){
+        wordObj.correctAnswers = this.wordsForPuzzle[this.index].correctAnswers - 1;
+      }
+      this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
+        console.log(data);
+      });
       let alert = this.alertCtrl.create({
         title: `Wrong`,
         buttons: ['OK']
       });
       alert.present();
+      this.next(input);
     }
   }
 

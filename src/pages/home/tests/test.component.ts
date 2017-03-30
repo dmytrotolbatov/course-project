@@ -65,6 +65,21 @@ export class TestComponent {
         if (this.inputs[i].toLowerCase() != this.randomWords[i].name.toLowerCase()) {
           mistakes++;
           this.wrongWords.push(this.inputs[i]);
+          let wordObj: Word = new Word();
+          wordObj.id = this.randomWords[i].id;
+          if (wordObj.correctAnswers > 0){
+            wordObj.correctAnswers = this.randomWords[i].correctAnswers - 1;
+          }
+          this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
+            console.log(data);
+          });
+        }else {
+          let wordObj: Word = new Word();
+          wordObj.id = this.randomWords[i].id;
+          wordObj.correctAnswers = this.randomWords[i].correctAnswers + 1;
+          this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
+            console.log(data);
+          });
         }
       }
       let alertCorrect = this.alertCtrl.create({
@@ -76,6 +91,7 @@ export class TestComponent {
         buttons: ['OK']
       });
       mistakes > 0 ? alertFalse.present() : alertCorrect.present();
+      console.log(this.wrongWords, '//wrongWords');
     }
   }
 }

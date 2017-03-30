@@ -33,7 +33,13 @@ export class HomeTestsComponent {
 
   public loadData() {
     this.http.get(this.url).subscribe((data: any) => {
-      this.thesaurus = data.json();
+      let sourceThesaurus = data.json();
+      // this.thesaurus = data.json();
+      for (var i = 0; i < sourceThesaurus.length; i++) {
+        if (sourceThesaurus[i].correctAnswers < 11) {
+          this.thesaurus.push(sourceThesaurus[i]);
+        }
+      }
       this.thesaurus.sort( (word1, word2) => {
         if (word1.name < word2.name) {
           return -1;

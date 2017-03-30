@@ -3,6 +3,7 @@ export class Word {
   public createdAt: number;
   public name: string;
   public translation: string;
+  public correctAnswers: number;
 
   /**
    * @param {any} params
