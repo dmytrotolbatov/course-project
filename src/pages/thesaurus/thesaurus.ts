@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
-import {Http} from "@angular/http";
+import { Component } from '@angular/core';
+import { AlertController } from 'ionic-angular';
+import { Http } from "@angular/http";
 
-import {Word} from "../../shared/word";
-import {TestComponent} from "../home/tests/test.component";
+import { Word } from "../../shared/word";
 
 /*
   Generated class for the Thesaurus page.
@@ -24,7 +23,7 @@ export class ThesaurusPage {
   private wordObj: Word = new Word();
   private thesaurus: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController) {
+  constructor(private http: Http, public alertCtrl: AlertController) {
   }
 
   ionViewDidEnter() {
@@ -43,15 +42,10 @@ export class ThesaurusPage {
           return 0;
         }
       });
-      console.log(this.thesaurus);
+
       this.loading = false;
-      console.log(this.loading);
     });
   }
-
-  /*public viewTest(){
-    this.navCtrl.push(TestComponent, {thesaurus: this.thesaurus})
-  }*/
 
   public addWord(word) {
     if (!word) {
@@ -59,6 +53,7 @@ export class ThesaurusPage {
         title: 'White some text!',
         buttons: ['OK']
       });
+
       alert.present();
     }else {
       if (this.contains(this.thesaurus, word.toLowerCase())) {
@@ -66,14 +61,15 @@ export class ThesaurusPage {
           title: 'You have this word in list!',
           buttons: ['OK']
         });
+
         alertDublicate.present();
       }else {
         let urlYandex: string = `${this.urlTranslator}?key=${this.key}&text=${word}&lang=en-uk`;
+
         return this.http.get(urlYandex).subscribe((data: any) => {
           this.wordObj.name = word.toLowerCase();
           this.wordObj.translation = data.json().text[0].toLowerCase();
           this.wordObj.correctAnswers = 0;
-          console.log(this.wordObj);
           this.http.post(this.url, this.wordObj).subscribe((data: any) => {
             console.log(data);
             this.loadData();
@@ -85,7 +81,6 @@ export class ThesaurusPage {
 
   public deleteUser(id: number) {
     return this.http.delete(`${this.url}/${id}`).subscribe((data: any) => {
-      console.log(data);
       this.loadData();
     });
   }

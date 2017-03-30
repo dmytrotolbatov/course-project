@@ -12,7 +12,6 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <ion-grid>
     <ion-row>
@@ -22,13 +21,11 @@
           <ion-input type="text" #word></ion-input>
         </ion-item>
       </ion-col>
-      <!--<ion-col><button ion-button class="round-button" (click)="getWord(word.value)"><ion-icon name="arrow-forward"></ion-icon></button></ion-col>-->
     </ion-row>
     <ion-row>
       <button ion-button round (click)="getWord(word.value)">Find</button>
     </ion-row>
   </ion-grid>
-
       <ion-spinner name="bubbles" *ngIf="loading"></ion-spinner>
       <ion-grid *ngIf="results.length > 0 && !loading">
         <ion-row>
@@ -45,21 +42,4 @@
           <ion-col class="table-col" *ngIf="!word.senses[0]?.examples"></ion-col>
         </ion-row>
       </ion-grid>
-
-     <!-- <table>
-        <tr>
-          <th>Headword</th>
-          <th>Part of speech</th>
-          <th>Definition</th>
-          <th>Example</th>
-        </tr>
-        <tr *ngFor="let word of results">
-          <td>{{word.headword}}</td>
-          <td>{{word.part_of_speech}}</td>
-          <td>{{word.senses[0]?.definition}}</td>
-          <td *ngIf="word.senses[0]?.examples">{{word.senses[0]?.examples[0].text}}</td>
-        </tr>
-      </table>-->
-    <!--</div>
-  </div>-->
 </ion-content>

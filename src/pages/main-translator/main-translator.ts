@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
-import {Http} from "@angular/http";
+import { AlertController } from 'ionic-angular';
+import { Http } from "@angular/http";
 
 /*
   Generated class for the MainTranslator page.
@@ -14,7 +14,7 @@ import {Http} from "@angular/http";
 })
 export class MainTranslatorPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController) {}
+  constructor(private http: Http, public alertCtrl: AlertController) {}
 
   private loading: boolean;
   private url: string = `http://api.pearson.com/v2/dictionaries/entries?headword=`;
@@ -26,20 +26,15 @@ export class MainTranslatorPage {
         title: 'Enter word!',
         buttons: ['OK']
       });
+
       alert.present();
     }else {
       this.loading = true;
       let urlDictionary: string = `${this.url}${word}`;
       return this.http.get(urlDictionary).subscribe((data: any) => {
         this.results = data.json().results;
-        console.log(this.results);
         this.loading = false;
       });
     }
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MainTranslatorPage');
-  }
-
 }

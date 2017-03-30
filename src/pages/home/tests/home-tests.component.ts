@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {Http} from "@angular/http";
+import { Http } from "@angular/http";
 
-import {TestComponent} from "./test.component";
-import {PuzzleComponent} from "./puzzle.component";
+import { TestComponent } from "./test.component";
+import { PuzzleComponent } from "./puzzle.component";
 
 
 @Component({
@@ -34,12 +34,13 @@ export class HomeTestsComponent {
   public loadData() {
     this.http.get(this.url).subscribe((data: any) => {
       let sourceThesaurus = data.json();
-      // this.thesaurus = data.json();
+
       for (var i = 0; i < sourceThesaurus.length; i++) {
         if (sourceThesaurus[i].correctAnswers < 11) {
           this.thesaurus.push(sourceThesaurus[i]);
         }
       }
+
       this.thesaurus.sort( (word1, word2) => {
         if (word1.name < word2.name) {
           return -1;
@@ -49,9 +50,8 @@ export class HomeTestsComponent {
           return 0;
         }
       });
-      console.log(this.thesaurus);
+
       this.loading = false;
-      console.log(this.loading);
     });
   }
 }

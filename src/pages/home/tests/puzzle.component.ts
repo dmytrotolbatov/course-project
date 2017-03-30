@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavParams, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Word } from '../../../shared/word';
 
@@ -18,12 +18,12 @@ export class PuzzleComponent {
   private inputForPuzzle: string = '';
   private correctAnswers: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private http: Http) {
+  constructor(public navParams: NavParams, public alertCtrl: AlertController, private http: Http) {
     this.thesaurus = this.navParams.get('thesaurus');
     this.shuffledThesaurus = this.shuffle(this.thesaurus);
-    console.log(this.shuffledThesaurus[0].name, 'shuffled');
     for (var i = 0; i < this.shuffledThesaurus.length; i++){
       let puzzledWord = this.shuffledThesaurus[i].name;
+
       puzzledWord = this.shuffle(puzzledWord.split(""));
       this.wordsForPuzzle.push({
         'puzzle': puzzledWord,
@@ -31,7 +31,6 @@ export class PuzzleComponent {
         'id': this.shuffledThesaurus[i].id,
         'correctAnswers': this.shuffledThesaurus[i].correctAnswers});
     }
-    console.log(this.wordsForPuzzle, 'WORDS for puzzle');
   }
 
   ionViewDidEnter() {
@@ -44,30 +43,37 @@ export class PuzzleComponent {
         title: `Write answer`,
         buttons: ['OK']
       });
+
       alert.present();
     }else if (this.inputForPuzzle == this.wordsForPuzzle[this.index].answer){
       this.correctAnswers++;
       let wordObj: Word = new Word();
+
       wordObj.id = this.wordsForPuzzle[this.index].id;
       wordObj.correctAnswers = this.wordsForPuzzle[this.index].correctAnswers + 1;
       this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
         console.log(data);
       });
+
       let alert = this.alertCtrl.create({
         title: `Correct`,
         buttons: ['OK']
       });
+
       alert.present();
       this.next(input);
     }else {
       let wordObj: Word = new Word();
+
       wordObj.id = this.wordsForPuzzle[this.index].id;
       if (wordObj.correctAnswers > 0){
         wordObj.correctAnswers = this.wordsForPuzzle[this.index].correctAnswers - 1;
       }
+
       this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
         console.log(data);
       });
+
       let alert = this.alertCtrl.create({
         title: `Wrong`,
         buttons: ['OK']
@@ -87,6 +93,7 @@ export class PuzzleComponent {
         title: `Correct answers: ${this.correctAnswers}`,
         buttons: ['OK']
       });
+
       alert.present();
       this.correctAnswers = 0;
     }
@@ -95,14 +102,9 @@ export class PuzzleComponent {
   public shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-
-      // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;

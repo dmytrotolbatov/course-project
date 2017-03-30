@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController} from 'ionic-angular';
-import {Http} from "@angular/http";
-import * as _ from "lodash"
-import {Word} from "../../../shared/word";
+import { Component } from '@angular/core';
+import { NavParams, AlertController } from 'ionic-angular';
+import { Http } from "@angular/http";
+import { Word } from "../../../shared/word";
 
 /*
  Generated class for the Thesaurus page.
@@ -24,17 +23,15 @@ export class TestComponent {
   private inputs: any = [];
   private wrongWords: Array<string> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public alertCtrl: AlertController) {
+  constructor(public navParams: NavParams, private http: Http, public alertCtrl: AlertController) {
     this.thesaurus = this.navParams.get('thesaurus');
-    console.log(this.thesaurus, 'passed thesaurus');
     while (this.randomWords.length < 5) {
       let randomWord = this.thesaurus[Math.floor(Math.random() * this.thesaurus.length)];
+
       if(!this.contains(this.randomWords, randomWord)){
-        console.log('here!');
         this.randomWords.push(randomWord);
       }
     }
-    console.log(this.randomWords, 'randomWords');
   }
 
   ionViewDidEnter() {
@@ -42,12 +39,13 @@ export class TestComponent {
   }
 
   public contains(arr, obj) {
-    console.log(arr, obj, 'check if true!');
     for (var i = 0; i < arr.length; i++){
       if (arr[i].id === obj.id){
+
         return true;
       }
     }
+
     return false;
   }
 
@@ -57,24 +55,28 @@ export class TestComponent {
         title: `Write all answers`,
         buttons: ['OK']
       });
+
       alert.present();
     }else {
       let mistakes: number = 0;
-      console.log(this.inputs);
+
       for (let i = 0; i < this.inputs.length; i++) {
         if (this.inputs[i].toLowerCase() != this.randomWords[i].name.toLowerCase()) {
           mistakes++;
           this.wrongWords.push(this.inputs[i]);
           let wordObj: Word = new Word();
+
           wordObj.id = this.randomWords[i].id;
           if (wordObj.correctAnswers > 0){
             wordObj.correctAnswers = this.randomWords[i].correctAnswers - 1;
           }
+
           this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
             console.log(data);
           });
         }else {
           let wordObj: Word = new Word();
+
           wordObj.id = this.randomWords[i].id;
           wordObj.correctAnswers = this.randomWords[i].correctAnswers + 1;
           this.http.put(`${this.url}/${wordObj.id}`, wordObj).subscribe((data: any) => {
@@ -82,6 +84,7 @@ export class TestComponent {
           });
         }
       }
+
       let alertCorrect = this.alertCtrl.create({
         title: `Correct!`,
         buttons: ['OK']
@@ -90,8 +93,8 @@ export class TestComponent {
         title: `Mistakes: ${this.wrongWords.join(', ')}(${mistakes})`,
         buttons: ['OK']
       });
+
       mistakes > 0 ? alertFalse.present() : alertCorrect.present();
-      console.log(this.wrongWords, '//wrongWords');
     }
   }
 }

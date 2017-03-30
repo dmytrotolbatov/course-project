@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import {TestComponent} from "./tests/test.component";
-import {HomeTestsComponent} from "./tests/home-tests.component";
+import { HomeTestsComponent } from './tests/home-tests.component';
 
 @Component({
   selector: 'page-home',
@@ -21,5 +20,4 @@ export class HomePage {
   public viewHomeTests(){
     this.navCtrl.push(HomeTestsComponent)
   }
-
 }
